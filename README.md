@@ -1,7 +1,7 @@
 # Beanstalker
 Scala Beanstalkd client-server library
 
-1. BeanstalkClientFactory
+- BeanstalkClientFactory
 ```
 val beansConfig = new Configuration()                       // Configure factory
 beansConfig.setServiceHost("127.0.0.1")
@@ -12,7 +12,7 @@ val beansFactory = new BeanstalkClientFactory(beansConfig)  // Create factory
   
 ```
 
-2. Client
+- Client
 ```
 val client = Client(requestTube = "request-tube", 
                     responseTube = "response-tube", 
@@ -24,7 +24,7 @@ client.send("message")                                      // Send request
   }
 ```
 
-3. Server
+- Server
 ```
 /**
  * @param data Request data
