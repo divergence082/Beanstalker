@@ -16,7 +16,7 @@ object Application extends App {
   val beansFactory = new BeanstalkClientFactory(beansConfig)
 
   val client = Client("request-tube", "response-tube", beansFactory)
-  val server = Server("request-tube", "response-tube", beansFactory, processor = onRequest)
+  val server = Server("request-tube", "response-tube", beansFactory, onRequest)
 
   /**
    * @param data Request data

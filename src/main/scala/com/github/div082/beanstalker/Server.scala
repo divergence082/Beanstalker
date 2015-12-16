@@ -1,5 +1,6 @@
 package com.github.div082.beanstalker
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import com.dinstone.beanstalkc.{BeanstalkClientFactory, JobConsumer, JobProducer}
 
 
@@ -19,7 +20,9 @@ class Server(beansProducer: JobProducer,
    * @param request Request Message
    */
   private def _processRequest(request: Message): Unit =
-    _producer.put(Message(request.id, processor(request.data)))
+    processor(request.data).map {
+      case response: String => _producer.put(Message(request.id, response))
+    }
 
 }
 

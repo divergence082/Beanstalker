@@ -1,12 +1,13 @@
 package com.github.div082
 
+import scala.concurrent.Future
+
 
 /**
  * com.github.div082.beanstalker helpers, constants and types
  */
 package object beanstalker {
-  type Processor = (String) => String
-  type MessageProcessor = (Message) => Unit
+  type Processor = (String) => Future[String]
 
   /**
    * @param e Error

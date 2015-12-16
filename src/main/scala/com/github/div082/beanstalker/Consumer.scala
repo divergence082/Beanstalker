@@ -7,7 +7,7 @@ import com.dinstone.beanstalkc.JobConsumer
  * @param consumer Beanstalkd Consumer
  * @param processor Message processor
  */
-class Consumer(consumer: JobConsumer, processor: MessageProcessor) extends Runnable {
+class Consumer(consumer: JobConsumer, processor: (Message) => Unit) extends Runnable {
 
   /**
    * Beanstalkd queue item handler
