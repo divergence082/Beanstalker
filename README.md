@@ -30,7 +30,7 @@ client.send("message")                                      // Send request
  * @param data Request data
  * @return Response data
  */
-def onRequest(data: String): Future[String] = {                     // Request handler
+def onRequest(data: String): Future[String] = {              // Request handler
   println("Request: " + data)
   Future {"Response: " + data}
 }
