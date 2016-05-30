@@ -46,6 +46,7 @@ lazy val beanstalker = Project(
     isSnapshot := true,
     libraryDependencies ++= Seq(
       "com.dinstone.beanstalkc" %  "beanstalk-client" % "2.2.0",
+      "ch.qos.logback"          %  "logback-classic"  % "1.1.7",
       "org.scalatest"           %% "scalatest"        % "3.0.0-RC1" % "test")))
   .settings(
     testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test"))))

@@ -1,4 +1,4 @@
-package com.github.div082.beanstalker
+package com.divergence.beanstalker
 
 import com.dinstone.beanstalkc.{BeanstalkClientFactory, Configuration}
 import scala.concurrent.ExecutionContext.Implicits.global
