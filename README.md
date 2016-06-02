@@ -48,7 +48,7 @@ Tests:
 sbt test
 ```
 
--Integration Tests
+- Integration Tests
 ```
 sbt "it:test-only space.divergence.beanstalker.ClientServerTest -- -DreqTube=req -DresTube=res -Dhost=127.0.0.1 -Dport=11300 -Dload=1000 -Dttp=1"
 ```
