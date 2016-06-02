@@ -1,4 +1,4 @@
-package com.divergence.beanstalker.codec
+package space.divergence.beanstalker.codec
 
 import java.util.zip.{GZIPInputStream, GZIPOutputStream}
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}

@@ -1,25 +1,34 @@
-package com.divergence.beanstalker
+package space.divergence.beanstalker
 
+import java.util.UUID
+import org.slf4j.LoggerFactory
+import scala.concurrent.ExecutionContext.Implicits.global
 import com.dinstone.beanstalkc.{BeanstalkClientFactory, Configuration, JobConsumer, JobProducer}
 
 
-class Server(consumer: JobConsumer,
-             producer: JobProducer,
-             processor: ByteArrayProcessor) {
-
+class Server(consumer: JobConsumer, producer: JobProducer, processor: ByteArrayProcessor) {
+  private val _logger = LoggerFactory.getLogger(this.getClass)
   private val _producer = new Producer(producer)
   private val _consumer = new Consumer(consumer, _processRequest)
-  private val _consumerThread = new Thread(_consumer)
+  private val _consumerThreadName = s"server-consumer-${UUID.randomUUID().toString}"
+  private val _consumerThread = new Thread(_consumer, _consumerThreadName)
   _consumerThread.start()
 
-  private def _processRequest(request: Message): Unit =
+  private def _processRequest(request: Message): Unit = {
+    _logger.trace(s"request (${request.id}) received")
     processor(request.data).map {
-      case response: Array[Byte] => _producer.put(Message(request.id, response))
+      case res: Array[Byte] =>
+        val response = Message(request.id, res)
+        _logger.trace(s"response (${response.id}) sent")
+        _producer.put(response)
     }
+  }
 
   def close(): Unit = {
+    _logger.info("(close)")
     _consumer.close()
     _producer.close()
+    _logger.info("(interrupt)")
     _consumerThread.interrupt()
   }
 }

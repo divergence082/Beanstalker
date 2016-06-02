@@ -1,4 +1,4 @@
-package com.divergence.beanstalker.codec
+package space.divergence.beanstalker.codec
 
 import java.util.{Base64 => base64}
 

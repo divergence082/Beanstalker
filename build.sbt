@@ -38,16 +38,16 @@ lazy val publishSettings = Seq(
 lazy val beanstalker = Project(
   id = "beanstalker",
   base = file("."),
-  settings = Defaults.coreDefaultSettings ++ publishSettings ++ Seq(
-    organization := "com.divergence",
+  settings = Defaults.coreDefaultSettings ++ Defaults.itSettings ++ publishSettings ++ Seq(
+    organization := "space.divergence",
     name := "beanstalker",
-    version := "0.0.1",
+    version := "0.0.1-SNAPSHOT",
     scalaVersion := "2.11.8",
-    isSnapshot := true,
     libraryDependencies ++= Seq(
-      "com.dinstone.beanstalkc" %  "beanstalk-client" % "2.2.0",
-      "ch.qos.logback"          %  "logback-classic"  % "1.1.7",
-      "org.scalatest"           %% "scalatest"        % "3.0.0-RC1" % "test")))
+      "ch.qos.logback" %  "logback-classic" % "1.1.7",
+      "com.dinstone"   %  "beanstalkc"      % "2.2.0" exclude("org.slf4j", "slf4j-log4j12"),
+      "org.scalatest"  %% "scalatest"       % "3.0.0-RC1" % "it,test")))
+  .configs( IntegrationTest )
   .settings(
     testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test"))))
   .settings(

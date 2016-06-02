@@ -1,42 +1,57 @@
 # Beanstalker
-Scala Beanstalkd client-server library
-
-- BeanstalkClientFactory
-```
-val beansConfig = new Configuration()                       // Configure factory
-beansConfig.setServiceHost("127.0.0.1")
-beansConfig.setServicePort(11300)
-beansConfig.setLong(Configuration.OPERATION_TIMEOUT, 1L)
-
-val beansFactory = new BeanstalkClientFactory(beansConfig)  // Create factory
+Scala Beanstalkd client-server library 
   
+Sbt:
+----
+```
+libraryDependencies += "space.divergence" % "beanstalker_2.11" % "0.0.1"
+```
+or
+```
+libraryDependencies += "space.divergence" %% "beanstalker" % "0.0.1"
 ```
 
+Usage:
+------
 - Client
 ```
 val client = Client(requestTube = "request-tube", 
                     responseTube = "response-tube", 
-                    beansFactory = beansFactory)            // Create client
+                    host = "127.0.0.1", 
+                    port = 11300)                                       // Create client
 
-client.send("message")                                      // Send request
-  .onSuccess {                                              // Handle response
-    case data: String => println("Response: " + data)   
+client.send("message".getBytes)                                         // Send request
+  .onSuccess {                                                          // Handle response
+    case data: Array[Byte] => println("Response: " + new String(data))   
   }
 ```
 
 - Server
 ```
-/**
- * @param data Request data
- * @return Response data
- */
-def onRequest(data: String): Future[String] = {              // Request handler
-  println("Request: " + data)
-  Future {"Response: " + data}
-}
+def onRequest(data: Array[Byte]): Future[Array[Byte]] =                 // Request handler
+  Future {
+    println("Request: " + new String(data))
+    data
+  }
 
 val server = Server(requestTube = "request-tube", 
                     responseTube = "response-tube", 
-                    beansFactory = beansFactory, 
-                    processor = onRequest)                  // Create Server
+                    host = "127.0.0.1",
+                    port = 11300, 
+                    processor = onRequest)                              // Create Server
 ```
+
+Tests:
+------
+- Units
+```
+sbt test
+```
+
+-Integration Tests
+```
+sbt "it:test-only space.divergence.beanstalker.ClientServerTest -- -DreqTube=req -DresTube=res -Dhost=127.0.0.1 -Dport=11300 -Dload=1000 -Dttp=1"
+```
+
+
+
