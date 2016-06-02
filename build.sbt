@@ -41,7 +41,7 @@ lazy val beanstalker = Project(
   settings = Defaults.coreDefaultSettings ++ Defaults.itSettings ++ publishSettings ++ Seq(
     organization := "space.divergence",
     name := "beanstalker",
-    version := "0.0.1-SNAPSHOT",
+    version := "0.0.1",
     scalaVersion := "2.11.8",
     libraryDependencies ++= Seq(
       "ch.qos.logback" %  "logback-classic" % "1.1.7",
