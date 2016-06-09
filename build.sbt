@@ -47,7 +47,7 @@ lazy val beanstalker = Project(
       "ch.qos.logback" %  "logback-classic" % "1.1.7",
       "com.dinstone"   %  "beanstalkc"      % "2.2.0" exclude("org.slf4j", "slf4j-log4j12"),
       "org.scalatest"  %% "scalatest"       % "3.0.0-RC1" % "it,test")))
-  .configs( IntegrationTest )
+  .configs(IntegrationTest)
   .settings(
     testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test"))))
   .settings(
